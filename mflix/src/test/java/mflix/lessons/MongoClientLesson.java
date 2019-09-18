@@ -8,6 +8,7 @@ import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.junit.Assert;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
@@ -29,7 +30,9 @@ public class MongoClientLesson extends AbstractLesson {
 
   private MongoCollection<Document> collection;
 
-  private String uri = "<YOUR SRV STRING from the application.properties file>";
+  private String uri = "mongodb+srv://user:pass@mflix-yhrxg.mongodb.net/test?retryWrites=true&w=majority";
+
+  private String dbName = "sample_mflix";
 
   private Document document;
 
@@ -121,7 +124,7 @@ public class MongoClientLesson extends AbstractLesson {
     you need to go over the contents more than once.
      */
 
-    Assert.assertTrue(dbnames.contains("mflix"));
+    Assert.assertTrue(dbnames.contains(dbName));
 
     /*
     Then we have our MongoDatabase object. We will use this object to
@@ -129,7 +132,7 @@ public class MongoClientLesson extends AbstractLesson {
     database level read preferences, read concerns and write concerns.
      */
 
-    database = mongoClient.getDatabase("mflix");
+    database = mongoClient.getDatabase(dbName);
 
     ReadPreference readPreference = database.getReadPreference();
 
@@ -154,7 +157,7 @@ public class MongoClientLesson extends AbstractLesson {
      */
 
     mongoClient = MongoClients.create(uri);
-    database = mongoClient.getDatabase("mflix");
+    database = mongoClient.getDatabase(dbName);
     collection = database.getCollection("movies");
 
     /*

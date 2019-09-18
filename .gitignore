@@ -89,6 +89,7 @@ modules.xml
 .idea/sonarlint
 
 ### Java ###
+target/
 # Compiled class file
 *.class
 
